@@ -31,3 +31,10 @@ resource "random_string" "meilisearch_master_key" {
   length  = 20
   special = false
 }
+
+resource "random_string" "mongo_root_password" {
+  length  = 32
+  lower   = true
+  upper   = false
+  special = false
+}
