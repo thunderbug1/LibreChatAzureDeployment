@@ -44,7 +44,7 @@ resource "azurerm_linux_web_app" "librechat" {
 
     APP_TITLE = var.app_title
 
-    AZURE_API_KEY = module.openai.openai_primary_key
+    AZURE_OPENAI_API_KEY = module.openai.openai_primary_key
     # AZURE_OPENAI_API_INSTANCE_NAME             = module.openai.account_name
     AZURE_OPENAI_API_DEPLOYMENT_NAME             = "gpt-35-turbo"
     AZURE_OPENAI_API_VERSION                     = "2023-05-15"
@@ -87,7 +87,7 @@ resource "azurerm_linux_web_app" "librechat" {
     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat:latest"
   }
   # depends_on = [azurerm_linux_web_app.meilisearch, azurerm_cosmosdb_account.librechat]
-  depends_on = [azurerm_linux_web_app.meilisearch, azurerm_linux_web_app.mongo]
+  depends_on = [azurerm_linux_web_app.meilisearch]
 }
 
 #  Deploy code from a public GitHub repo
