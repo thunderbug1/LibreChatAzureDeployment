@@ -15,7 +15,7 @@ You must have an existing Azure subscription for this to work.
 
 3. **Configure Deployment:**
     * Edit `terraform.tfvars` to customize your deployment. 
-    * You will need to set the `MONGO_URI` which is the connection string to your MongoDB. A fast and simple solution for that is a free cloud instance, like setting up an Atlas Instance.
+    * You will need to set the `MONGO_URI` which is the connection string to your MongoDB. A fast and simple solution for that is a free cloud instance, like setting up an [Atlas Instance](https://github.com/danny-avila/LibreChat/blob/main/docs/install/mongodb.md).
 
 4. **Azure Login:** Open the Terminal inside of VS-Code, and run the command `az login`.
 
