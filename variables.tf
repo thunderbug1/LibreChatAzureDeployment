@@ -19,6 +19,12 @@ variable "app_service_sku_name" {
   default = "B1"
 }
 
+variable "mongo_uri" {
+  description = "Connection string for the mongodb"
+  default = ""
+  sensitive = true
+}
+
 # variable "deployments" {
 #   description = "(Optional) Specifies the deployments of the Azure OpenAI Service"
 #   type = list(object({

@@ -34,14 +34,15 @@ resource "azurerm_linux_web_app" "librechat" {
     WEBSITE_RUN_FROM_PACKAGE = "1"
     HOST                     = "0.0.0.0"
     # MONGO_URI                = azurerm_cosmosdb_account.librechat.connection_strings[0]
-    MONGO_URI                = "mongodb://root:${random_string.mongo_root_password.result}@${azurerm_linux_web_app.mongo.name}:27017/?authSource=admin"
+    #  MONGO_URI                = "mongodb://root:${random_string.mongo_root_password.result}@${azurerm_linux_web_app.mongo.name}:27017/?authSource=admin"
+    MONGO_URI                = var.mongo_uri
     OPENAI_API_KEY           = var.openai_key
     MEILI_MASTER_KEY         = random_string.meilisearch_master_key.result
     MEILI_HOST               = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
     SEARCH=true
     MEILI_NO_ANALYTICS=true
 
-    APP_TITLE : var.app_title
+    APP_TITLE = var.app_title
 
     AZURE_OPENAI_API_KEY = module.openai.openai_primary_key
     # AZURE_OPENAI_API_INSTANCE_NAME             = module.openai.account_name
@@ -49,6 +50,22 @@ resource "azurerm_linux_web_app" "librechat" {
     AZURE_OPENAI_API_VERSION                     = "2023-05-15"
     AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = "gpt-35-turbo"
     AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  = "text-embedding-ada-002"
+
+    CHATGPT_TOKEN  = "user_provided"
+    CHATGPT_MODELS = "text-davinci-002-render-sha,gpt-4"
+
+    ANTHROPIC_API_KEY = "user_provided"
+    ANTHROPIC_MODELS  = "claude-1,claude-instant-1,claude-2"
+
+    BINGAI_TOKEN="user_provided"
+
+    GOOGLE_API_KEY=""
+    GOOGLE_CSE_ID=""
+
+    PALM_KEY="user_provided"
+
+    PLUGIN_MODELS = "gpt-3.5-turbo,gpt-3.5-turbo-16k,gpt-3.5-turbo-0301,gpt-4,gpt-4-0314,gpt-4-0613"
+
 
     CREDS_KEY = random_string.creds_key.result
     CREDS_IV  = random_string.creds_iv.result
@@ -142,39 +159,39 @@ resource "azurerm_linux_web_app" "meilisearch" {
 
 
 
-resource "azurerm_linux_web_app" "mongo" {
-  name                = "mongo${random_string.random_postfix.result}"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-  service_plan_id     = azurerm_service_plan.librechat.id
-  https_only          = true
-  site_config {
-    minimum_tls_version = "1.2"
+# resource "azurerm_linux_web_app" "mongo" {
+#   name                = "mongo${random_string.random_postfix.result}"
+#   location            = azurerm_resource_group.this.location
+#   resource_group_name = azurerm_resource_group.this.name
+#   service_plan_id     = azurerm_service_plan.librechat.id
+#   https_only          = true
+#   site_config {
+#     minimum_tls_version = "1.2"
 
-  }
+#   }
 
-  logs {
-    http_logs {
-      file_system {
-        retention_in_days = 7
-        retention_in_mb   = 35
-      }
-    }
-    application_logs {
-      file_system_level = "Information"
-    }
-  }
+#   logs {
+#     http_logs {
+#       file_system {
+#         retention_in_days = 7
+#         retention_in_mb   = 35
+#       }
+#     }
+#     application_logs {
+#       file_system_level = "Information"
+#     }
+#   }
 
-  app_settings = {
+#   app_settings = {
 
-    MONGO_INITDB_ROOT_USERNAME="root"
-    MONGO_INITDB_ROOT_PASSWORD=random_string.mongo_root_password.result
+#     MONGO_INITDB_ROOT_USERNAME="root"
+#     MONGO_INITDB_ROOT_PASSWORD=random_string.mongo_root_password.result
 
-    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-    DOCKER_ENABLE_CI                    = false
-    WEBSITES_PORT                       = 27017
-    PORT                                = 27017
-    DOCKER_CUSTOM_IMAGE_NAME            = "mongo:latest"
-  }
-}
+#     DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
+#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+#     DOCKER_ENABLE_CI                    = false
+#     WEBSITES_PORT                       = 27017
+#     PORT                                = 27017
+#     DOCKER_CUSTOM_IMAGE_NAME            = "mongo:latest"
+#   }
+# }
