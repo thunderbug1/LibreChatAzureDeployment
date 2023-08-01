@@ -17,6 +17,17 @@ output "meilisearch_url" {
   value = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
 }
 
+output "azure_openai_api_key" {
+  value = "${module.openai.openai_primary_key}"
+  sensitive = true
+}
+
+output "azure_openai_endpoint" {
+  value = "${module.openai.openai_endpoint}"
+  sensitive = true
+}
+
+
 # output "meilisearch_master_key" {
 #   description = "MeiliSearch Master Key"
 #   value       = random_string.meilisearch_master_key

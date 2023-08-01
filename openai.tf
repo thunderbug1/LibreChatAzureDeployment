@@ -1,9 +1,10 @@
 module "openai" {
-#   account_name        = "openai_service_librechat"
+  # application_name = "openai_service_librechat"
   source              = "Azure/openai/azurerm"
   version             = "0.1.1"
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
+  public_network_access_enabled = true
   # private_endpoint = {
   #   "pe_endpoint" = {
   #     private_dns_entry_enabled       = true
