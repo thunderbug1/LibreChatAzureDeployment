@@ -23,6 +23,7 @@ You must have an existing Azure subscription for this to work.
 
 6. **Apply Terraform Configuration:** In the Terminal inside of VS-Code, run the command `terraform apply`.
 
+7. **Open LibreChat:** After finishing, terraform shows the outputs in the terminal. Open the Url of "libre_chat_url" (it might take some minutes until everything has booted)
 ## Teardown
 
 To tear down your Azure resources, run the command `terraform destroy` in the Terminal inside of VS-Code.
