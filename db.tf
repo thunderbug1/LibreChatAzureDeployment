@@ -5,7 +5,7 @@ resource "azurerm_cosmosdb_account" "librechat" {
   offer_type                = "Standard"
   kind                      = "MongoDB"
   enable_automatic_failover = false
-  enable_free_tier          = true
+  enable_free_tier          = var.use_cosmosdb_free_tier
 
 
   consistency_policy {

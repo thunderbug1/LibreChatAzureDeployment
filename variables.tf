@@ -25,6 +25,11 @@ variable "mongo_uri" {
   sensitive = true
 }
 
+variable "use_cosmosdb_free_tier" {
+  description = "Flag to enable/disable free tier of cosmosdb. This needs to be false if another instance already uses free tier."
+  default = true
+}
+
 # variable "deployments" {
 #   description = "(Optional) Specifies the deployments of the Azure OpenAI Service"
 #   type = list(object({
