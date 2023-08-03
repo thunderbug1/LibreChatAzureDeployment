@@ -37,16 +37,16 @@ resource "azurerm_linux_web_app" "librechat" {
     HOST                     = "0.0.0.0"
     MONGO_URI                = azurerm_cosmosdb_account.librechat.connection_strings[0]
     # MONGO_URI                = var.mongo_uri
-    OPENAI_API_KEY   = var.openai_key
-    MEILI_MASTER_KEY = random_string.meilisearch_master_key.result
-    MEILI_HOST = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
+    OPENAI_API_KEY     = var.openai_key
+    MEILI_MASTER_KEY   = random_string.meilisearch_master_key.result
+    MEILI_HOST         = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
     SEARCH             = true
     MEILI_NO_ANALYTICS = true
 
     APP_TITLE = var.app_title
 
-    AZURE_API_KEY = module.openai.openai_primary_key
-    AZURE_OPENAI_API_INSTANCE_NAME             = split("//", split(".", module.openai.openai_endpoint)[0])[1]
+    AZURE_API_KEY                                = module.openai.openai_primary_key
+    AZURE_OPENAI_API_INSTANCE_NAME               = split("//", split(".", module.openai.openai_endpoint)[0])[1]
     AZURE_OPENAI_API_DEPLOYMENT_NAME             = "gpt-35-turbo"
     AZURE_OPENAI_API_VERSION                     = "2023-05-15"
     AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = "gpt-35-turbo"
@@ -58,12 +58,12 @@ resource "azurerm_linux_web_app" "librechat" {
     ANTHROPIC_API_KEY = "user_provided"
     ANTHROPIC_MODELS  = "claude-1,claude-instant-1,claude-2"
 
-    BINGAI_TOKEN="user_provided"
+    BINGAI_TOKEN = "user_provided"
 
-    GOOGLE_API_KEY=""
-    GOOGLE_CSE_ID=""
+    GOOGLE_API_KEY = ""
+    GOOGLE_CSE_ID  = ""
 
-    PALM_KEY="user_provided"
+    PALM_KEY = "user_provided"
 
     PLUGIN_MODELS = "gpt-3.5-turbo,gpt-3.5-turbo-16k,gpt-3.5-turbo-0301,gpt-4,gpt-4-0314,gpt-4-0613"
 
@@ -78,7 +78,7 @@ resource "azurerm_linux_web_app" "librechat" {
     VITE_SHOW_GOOGLE_LOGIN_OPTION = false
     ALLOW_REGISTRATION            = true
 
-    SESSION_EXPIRY=(1000 * 60 * 60 * 24) * 7
+    SESSION_EXPIRY = (1000 * 60 * 60 * 24) * 7
 
     DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
@@ -88,7 +88,7 @@ resource "azurerm_linux_web_app" "librechat" {
     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
     NODE_ENV                            = "production"
   }
-  virtual_network_subnet_id               = azurerm_subnet.librechat_subnet.id
+  virtual_network_subnet_id = azurerm_subnet.librechat_subnet.id
 
   depends_on = [azurerm_linux_web_app.meilisearch, azurerm_cosmosdb_account.librechat, module.openai]
   # depends_on = [azurerm_linux_web_app.meilisearch]
@@ -143,9 +143,9 @@ resource "azurerm_linux_web_app" "meilisearch" {
     always_on = "true"
     ip_restriction {
       virtual_network_subnet_id = azurerm_subnet.librechat_subnet.id
-      priority  = 100
-      name      = "Allow from LibreChat subnet"
-      action    = "Allow"
+      priority                  = 100
+      name                      = "Allow from LibreChat subnet"
+      action                    = "Allow"
     }
   }
 
