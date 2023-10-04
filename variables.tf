@@ -14,6 +14,30 @@ variable "openai_key" {
   sensitive = true
 }
 
+variable "chatgpt_token" {
+  description = "ChatGPT Token"
+  default = "user_provided"
+  sensitive = true
+}
+
+variable "anthropic_api_key" {
+  description = "Anthropic API Key"
+  default = "user_provided"
+  sensitive = true
+}
+
+variable "bingai_token" {
+  description = "BingAI Token"
+  default = "user_provided"
+  sensitive = true
+}
+
+variable "palm_key" {
+  description = "PaLM Key"
+  default = "user_provided"
+  sensitive = true
+}
+
 variable "app_service_sku_name" {
   description = "size of the VM that runs the librechat app. F1 is free but limited to 1h per day."
   default = "B1"
