@@ -52,18 +52,18 @@ resource "azurerm_linux_web_app" "librechat" {
     AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = "gpt-35-turbo"
     AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  = "text-embedding-ada-002"
 
-    CHATGPT_TOKEN  = "user_provided"
+    CHATGPT_TOKEN  = var.chatgpt_token
     CHATGPT_MODELS = "text-davinci-002-render-sha,gpt-4"
 
-    ANTHROPIC_API_KEY = "user_provided"
+    ANTHROPIC_API_KEY = var.anthropic_api_key
     ANTHROPIC_MODELS  = "claude-1,claude-instant-1,claude-2"
 
-    BINGAI_TOKEN = "user_provided"
+    BINGAI_TOKEN = var.bingai_token
 
     GOOGLE_API_KEY = ""
     GOOGLE_CSE_ID  = ""
 
-    PALM_KEY = "user_provided"
+    PALM_KEY = var.palm_key
 
     PLUGIN_MODELS = "gpt-3.5-turbo,gpt-3.5-turbo-16k,gpt-3.5-turbo-0301,gpt-4,gpt-4-0314,gpt-4-0613"
 
