@@ -47,10 +47,10 @@ resource "azurerm_linux_web_app" "librechat" {
 
     AZURE_API_KEY                                = module.openai.openai_primary_key
     AZURE_OPENAI_API_INSTANCE_NAME               = split("//", split(".", module.openai.openai_endpoint)[0])[1]
-    AZURE_OPENAI_API_DEPLOYMENT_NAME             = "gpt-35-turbo"
-    AZURE_OPENAI_API_VERSION                     = "2023-05-15"
-    AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = "gpt-35-turbo"
-    AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  = "text-embedding-ada-002"
+    AZURE_OPENAI_API_DEPLOYMENT_NAME             = var.azure_openai_api_deployment_name != "" ? var.azure_openai_api_deployment_name : (contains(keys(var.deployments), "chat_model") ? var.deployments.chat_model.name : "")
+    AZURE_OPENAI_API_VERSION                     = var.azure_openai_api_version
+    AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = var.azure_openai_api_completions_deployment_name != "" ? var.azure_openai_api_completions_deployment_name : (contains(keys(var.deployments), "chat_model") ? var.deployments.chat_model.name : "")
+    AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  = var.azure_openai_api_embeddings_deployment_name != "" ? var.azure_openai_api_embeddings_deployment_name : (contains(keys(var.deployments), "embedding_model") ? var.deployments.embedding_model.name : "")
 
     CHATGPT_TOKEN  = var.chatgpt_token
     CHATGPT_MODELS = "text-davinci-002-render-sha,gpt-4"

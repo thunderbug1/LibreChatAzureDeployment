@@ -17,22 +17,7 @@ module "openai" {
   #     vnet_rg_name                    = azurerm_resource_group.this.name
   #   }
   # }
-  deployment = {
-    "chat_model" = {
-      name          = "gpt-35-turbo"
-      model_format  = "OpenAI"
-      model_name    = "gpt-35-turbo"
-      model_version = "0301"
-      scale_type    = "Standard"
-    },
-    "embedding_model" = {
-      name          = "text-embedding-ada-002"
-      model_format  = "OpenAI"
-      model_name    = "text-embedding-ada-002"
-      model_version = "2"
-      scale_type    = "Standard"
-    },
-  }
+  deployment = var.deployments
   depends_on = [
     azurerm_resource_group.this,
     # module.vnet
