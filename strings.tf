@@ -13,6 +13,13 @@ resource "random_string" "jwt_secret" {
   special = false
 }
 
+resource "random_string" "jwt_refresh_secret" {
+  length  = 64
+  lower   = true
+  upper   = false
+  special = false
+}
+
 resource "random_string" "creds_key" {
   length  = 64
   lower   = true

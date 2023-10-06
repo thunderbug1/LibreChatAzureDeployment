@@ -72,6 +72,7 @@ resource "azurerm_linux_web_app" "librechat" {
     CREDS_IV  = random_string.creds_iv.result
 
     JWT_SECRET    = random_string.jwt_secret.result
+    JWT_REFRESH_SECRET = random_string.jwt_refresh_secret.result
     DOMAIN_SERVER = "http://localhost:3080"
     DOMAIN_CLIENT = "http://localhost:3080"
 
