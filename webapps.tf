@@ -1,23 +1,23 @@
-resource "azurerm_service_plan" "librechat" {
-  name                = "librechat-asp${random_string.random_postfix.result}"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-  os_type             = "Linux"
-
-  sku_name = var.app_service_sku_name
+data "azurerm_linux_web_app" "existing_webapp" {
+  name                = "ct-enterprisechat-webapp"
+  resource_group_name = data.azurerm_resource_group.this.name
 }
 
-resource "azurerm_linux_web_app" "librechat" {
-  name                          = "librechatapp${random_string.random_postfix.result}"
-  location                      = azurerm_resource_group.this.location
-  resource_group_name           = azurerm_resource_group.this.name
-  service_plan_id               = azurerm_service_plan.librechat.id
+data "azurerm_service_plan" "existing_serviceplan" {
+  name                = "asp-ct-enterprisechat-webapp"
+  resource_group_name = data.azurerm_resource_group.this.name
+}
+
+resource "azurerm_linux_web_app_slot" "librechat_slot" {
+  name                = "stage"  # Name of the slot
+  #name                          = "${var.web_name}"
+  app_service_id    = data.azurerm_linux_web_app.existing_webapp.id
+  service_plan_id               = data.azurerm_service_plan.existing_serviceplan.id
   public_network_access_enabled = true
   https_only                    = true
 
   site_config {
     minimum_tls_version = "1.2"
-
   }
 
   logs {
@@ -45,9 +45,9 @@ resource "azurerm_linux_web_app" "librechat" {
 
     APP_TITLE = var.app_title
 
-    AZURE_API_KEY                                = module.openai.openai_primary_key
-    AZURE_OPENAI_API_INSTANCE_NAME               = split("//", split(".", module.openai.openai_endpoint)[0])[1]
-    AZURE_OPENAI_API_DEPLOYMENT_NAME             = var.azure_openai_api_deployment_name != "" ? var.azure_openai_api_deployment_name : (contains(keys(var.deployments), "chat_model") ? var.deployments.chat_model.name : "")
+    AZURE_API_KEY                                = var.azure_openai_key
+    AZURE_OPENAI_API_INSTANCE_NAME               = var.azure_openai_instance_name
+    AZURE_OPENAI_API_DEPLOYMENT_NAME             = var.azure_openai_api_deployment_name
     AZURE_OPENAI_API_VERSION                     = var.azure_openai_api_version
     AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = var.azure_openai_api_completions_deployment_name != "" ? var.azure_openai_api_completions_deployment_name : (contains(keys(var.deployments), "chat_model") ? var.deployments.chat_model.name : "")
     AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  = var.azure_openai_api_embeddings_deployment_name != "" ? var.azure_openai_api_embeddings_deployment_name : (contains(keys(var.deployments), "embedding_model") ? var.deployments.embedding_model.name : "")
@@ -89,9 +89,9 @@ resource "azurerm_linux_web_app" "librechat" {
     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
     NODE_ENV                            = "production"
   }
-  virtual_network_subnet_id = azurerm_subnet.librechat_subnet.id
+  virtual_network_subnet_id = data.azurerm_subnet.librechat_subnet.id
 
-  depends_on = [azurerm_linux_web_app.meilisearch, azurerm_cosmosdb_account.librechat, module.openai]
+  depends_on = [azurerm_linux_web_app.meilisearch, azurerm_cosmosdb_account.librechat]
   # depends_on = [azurerm_linux_web_app.meilisearch]
 }
 
@@ -121,10 +121,10 @@ resource "azurerm_linux_web_app" "librechat" {
 
 #TODO: privately communicate between librechat and meilisearch, right now it is via public internet
 resource "azurerm_linux_web_app" "meilisearch" {
-  name                = "meilisearchapp${random_string.random_postfix.result}"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-  service_plan_id     = azurerm_service_plan.librechat.id
+  name                = "ct-meilisearch-webapp"
+  location            = var.location
+  resource_group_name = data.azurerm_resource_group.this.name
+  service_plan_id     = data.azurerm_service_plan.existing_serviceplan.id
 
   app_settings = {
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
@@ -143,7 +143,7 @@ resource "azurerm_linux_web_app" "meilisearch" {
   site_config {
     always_on = "true"
     ip_restriction {
-      virtual_network_subnet_id = azurerm_subnet.librechat_subnet.id
+      virtual_network_subnet_id = data.azurerm_subnet.librechat_subnet.id
       priority                  = 100
       name                      = "Allow from LibreChat subnet"
       action                    = "Allow"

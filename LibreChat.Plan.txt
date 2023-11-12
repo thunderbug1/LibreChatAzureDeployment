@@ -1,0 +1,335 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_cosmosdb_account.librechat will be created
+  + resource "azurerm_cosmosdb_account" "librechat" {
+      + access_key_metadata_writes_enabled           = true
+      + analytical_storage_enabled                   = false
+      + connection_strings                           = (sensitive value)
+      + create_mode                                  = (known after apply)
+      + default_identity_type                        = "FirstPartyIdentity"
+      + enable_automatic_failover                    = false
+      + enable_free_tier                             = true
+      + enable_multiple_write_locations              = false
+      + endpoint                                     = (known after apply)
+      + id                                           = (known after apply)
+      + is_virtual_network_filter_enabled            = true
+      + kind                                         = "MongoDB"
+      + local_authentication_disabled                = false
+      + location                                     = "eastus2"
+      + mongo_server_version                         = (known after apply)
+      + name                                         = "ct-librechat-db"
+      + network_acl_bypass_for_azure_services        = false
+      + offer_type                                   = "Standard"
+      + primary_key                                  = (sensitive value)
+      + primary_mongodb_connection_string            = (sensitive value)
+      + primary_readonly_key                         = (sensitive value)
+      + primary_readonly_mongodb_connection_string   = (sensitive value)
+      + primary_readonly_sql_connection_string       = (sensitive value)
+      + primary_sql_connection_string                = (sensitive value)
+      + public_network_access_enabled                = true
+      + read_endpoints                               = (known after apply)
+      + resource_group_name                          = "CapTech-EnterpriseChat"
+      + secondary_key                                = (sensitive value)
+      + secondary_mongodb_connection_string          = (sensitive value)
+      + secondary_readonly_key                       = (sensitive value)
+      + secondary_readonly_mongodb_connection_string = (sensitive value)
+      + secondary_readonly_sql_connection_string     = (sensitive value)
+      + secondary_sql_connection_string              = (sensitive value)
+      + write_endpoints                              = (known after apply)
+
+      + capabilities {
+          + name = "EnableMongo"
+        }
+      + capabilities {
+          + name = "EnableServerless"
+        }
+      + capabilities {
+          + name = "MongoDBv3.4"
+        }
+
+      + consistency_policy {
+          + consistency_level       = "BoundedStaleness"
+          + max_interval_in_seconds = 10
+          + max_staleness_prefix    = 200
+        }
+
+      + geo_location {
+          + failover_priority = 0
+          + id                = (known after apply)
+          + location          = "eastus2"
+          + zone_redundant    = false
+        }
+
+      + virtual_network_rule {
+          + id                                   = "/subscriptions/9de3b6c9-9531-4f99-bd73-b3472972fc7d/resourceGroups/CapTech-EnterpriseChat/providers/Microsoft.Network/virtualNetworks/vnet01/subnets/subnet-1"
+          + ignore_missing_vnet_service_endpoint = false
+        }
+    }
+
+  # azurerm_linux_web_app.meilisearch will be created
+  + resource "azurerm_linux_web_app" "meilisearch" {
+      + app_settings                      = (known after apply)
+      + client_affinity_enabled           = false
+      + client_certificate_enabled        = false
+      + client_certificate_mode           = "Required"
+      + custom_domain_verification_id     = (sensitive value)
+      + default_hostname                  = (known after apply)
+      + enabled                           = true
+      + hosting_environment_id            = (known after apply)
+      + https_only                        = false
+      + id                                = (known after apply)
+      + key_vault_reference_identity_id   = (known after apply)
+      + kind                              = (known after apply)
+      + location                          = "eastus2"
+      + name                              = "ct-meilisearch-webapp"
+      + outbound_ip_address_list          = (known after apply)
+      + outbound_ip_addresses             = (known after apply)
+      + possible_outbound_ip_address_list = (known after apply)
+      + possible_outbound_ip_addresses    = (known after apply)
+      + public_network_access_enabled     = true
+      + resource_group_name               = "CapTech-EnterpriseChat"
+      + service_plan_id                   = "/subscriptions/9de3b6c9-9531-4f99-bd73-b3472972fc7d/resourceGroups/CapTech-EnterpriseChat/providers/Microsoft.Web/serverfarms/asp-ct-enterprisechat-webapp"
+      + site_credential                   = (sensitive value)
+      + zip_deploy_file                   = (known after apply)
+
+      + logs {
+          + detailed_error_messages = false
+          + failed_request_tracing  = false
+
+          + application_logs {
+              + file_system_level = "Information"
+            }
+
+          + http_logs {
+              + file_system {
+                  + retention_in_days = 7
+                  + retention_in_mb   = 35
+                }
+            }
+        }
+
+      + site_config {
+          + always_on                               = true
+          + container_registry_use_managed_identity = false
+          + default_documents                       = (known after apply)
+          + detailed_error_logging_enabled          = (known after apply)
+          + ftps_state                              = "Disabled"
+          + health_check_eviction_time_in_min       = (known after apply)
+          + http2_enabled                           = false
+          + linux_fx_version                        = (known after apply)
+          + load_balancing_mode                     = "LeastRequests"
+          + local_mysql_enabled                     = false
+          + managed_pipeline_mode                   = "Integrated"
+          + minimum_tls_version                     = "1.2"
+          + remote_debugging_enabled                = false
+          + remote_debugging_version                = (known after apply)
+          + scm_minimum_tls_version                 = "1.2"
+          + scm_type                                = (known after apply)
+          + scm_use_main_ip_restriction             = false
+          + use_32_bit_worker                       = true
+          + vnet_route_all_enabled                  = false
+          + websockets_enabled                      = false
+          + worker_count                            = (known after apply)
+
+          + ip_restriction {
+              + action                    = "Allow"
+              + name                      = "Allow from LibreChat subnet"
+              + priority                  = 100
+              + virtual_network_subnet_id = "/subscriptions/9de3b6c9-9531-4f99-bd73-b3472972fc7d/resourceGroups/CapTech-EnterpriseChat/providers/Microsoft.Network/virtualNetworks/vnet01/subnets/subnet-1"
+            }
+        }
+    }
+
+  # azurerm_linux_web_app_slot.librechat_slot will be created
+  + resource "azurerm_linux_web_app_slot" "librechat_slot" {
+      + app_metadata                      = (known after apply)
+      + app_service_id                    = "/subscriptions/9de3b6c9-9531-4f99-bd73-b3472972fc7d/resourceGroups/CapTech-EnterpriseChat/providers/Microsoft.Web/sites/ct-enterprisechat-webapp"
+      + app_settings                      = (known after apply)
+      + client_affinity_enabled           = false
+      + client_certificate_enabled        = false
+      + client_certificate_mode           = "Required"
+      + custom_domain_verification_id     = (sensitive value)
+      + default_hostname                  = (known after apply)
+      + enabled                           = true
+      + hosting_environment_id            = (known after apply)
+      + https_only                        = true
+      + id                                = (known after apply)
+      + key_vault_reference_identity_id   = (known after apply)
+      + kind                              = (known after apply)
+      + name                              = "stage"
+      + outbound_ip_address_list          = (known after apply)
+      + outbound_ip_addresses             = (known after apply)
+      + possible_outbound_ip_address_list = (known after apply)
+      + possible_outbound_ip_addresses    = (known after apply)
+      + public_network_access_enabled     = true
+      + service_plan_id                   = "/subscriptions/9de3b6c9-9531-4f99-bd73-b3472972fc7d/resourceGroups/CapTech-EnterpriseChat/providers/Microsoft.Web/serverfarms/asp-ct-enterprisechat-webapp"
+      + site_credential                   = (sensitive value)
+      + virtual_network_subnet_id         = "/subscriptions/9de3b6c9-9531-4f99-bd73-b3472972fc7d/resourceGroups/CapTech-EnterpriseChat/providers/Microsoft.Network/virtualNetworks/vnet01/subnets/subnet-1"
+      + zip_deploy_file                   = (known after apply)
+
+      + logs {
+          + detailed_error_messages = false
+          + failed_request_tracing  = false
+
+          + application_logs {
+              + file_system_level = "Information"
+            }
+
+          + http_logs {
+              + file_system {
+                  + retention_in_days = 7
+                  + retention_in_mb   = 35
+                }
+            }
+        }
+
+      + site_config {
+          + always_on                               = true
+          + container_registry_use_managed_identity = false
+          + default_documents                       = (known after apply)
+          + detailed_error_logging_enabled          = (known after apply)
+          + ftps_state                              = "Disabled"
+          + health_check_eviction_time_in_min       = (known after apply)
+          + http2_enabled                           = false
+          + linux_fx_version                        = (known after apply)
+          + load_balancing_mode                     = "LeastRequests"
+          + local_mysql_enabled                     = false
+          + managed_pipeline_mode                   = "Integrated"
+          + minimum_tls_version                     = "1.2"
+          + remote_debugging_enabled                = false
+          + remote_debugging_version                = (known after apply)
+          + scm_minimum_tls_version                 = "1.2"
+          + scm_type                                = (known after apply)
+          + scm_use_main_ip_restriction             = false
+          + use_32_bit_worker                       = true
+          + vnet_route_all_enabled                  = false
+          + websockets_enabled                      = false
+          + worker_count                            = (known after apply)
+        }
+    }
+
+  # random_string.creds_iv will be created
+  + resource "random_string" "creds_iv" {
+      + id          = (known after apply)
+      + length      = 32
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # random_string.creds_key will be created
+  + resource "random_string" "creds_key" {
+      + id          = (known after apply)
+      + length      = 64
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # random_string.jwt_refresh_secret will be created
+  + resource "random_string" "jwt_refresh_secret" {
+      + id          = (known after apply)
+      + length      = 64
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # random_string.jwt_secret will be created
+  + resource "random_string" "jwt_secret" {
+      + id          = (known after apply)
+      + length      = 64
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # random_string.meilisearch_master_key will be created
+  + resource "random_string" "meilisearch_master_key" {
+      + id          = (known after apply)
+      + length      = 20
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = true
+    }
+
+  # random_string.mongo_root_password will be created
+  + resource "random_string" "mongo_root_password" {
+      + id          = (known after apply)
+      + length      = 32
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+  # random_string.random_postfix will be created
+  + resource "random_string" "random_postfix" {
+      + id          = (known after apply)
+      + length      = 8
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = false
+    }
+
+Plan: 10 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + azure_openai_api_key  = (sensitive value)
+  + azure_openai_endpoint = (sensitive value)
+  + libre_chat_url        = "ct-enterprisechat-webapp.azurewebsites.net"
+  + meilisearch_url       = "ct-meilisearch-webapp.azurewebsites.net"
+  + ressource_group_name  = "CapTech-EnterpriseChat"

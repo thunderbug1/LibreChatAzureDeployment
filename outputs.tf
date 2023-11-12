@@ -6,11 +6,11 @@
 
 output "ressource_group_name" {
   description = "name of the created ressource group"
-  value       = azurerm_resource_group.this.name
+  value       = data.azurerm_resource_group.this.name
 }
 
 output "libre_chat_url" {
-  value = "${azurerm_linux_web_app.librechat.name}.azurewebsites.net"
+  value = "${data.azurerm_linux_web_app.existing_webapp.name}.azurewebsites.net"
 }
 
 output "meilisearch_url" {
@@ -18,12 +18,12 @@ output "meilisearch_url" {
 }
 
 output "azure_openai_api_key" {
-  value = "${module.openai.openai_primary_key}"
+  value = "${var.azure_openai_key}"
   sensitive = true
 }
 
 output "azure_openai_endpoint" {
-  value = "${module.openai.openai_endpoint}"
+  value = "${var.azure_openai_instance_name}"
   sensitive = true
 }
 
