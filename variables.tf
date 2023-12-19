@@ -1,6 +1,6 @@
 variable "location" {
   description = "The location where all resources will be deployed"
-  default     = "westeurope"
+  default     = "australiaeast"
 }
 
 variable "app_title" {
@@ -65,22 +65,54 @@ variable "deployments" {
     scale_type = string
   }))
   default = {
-    "chat_model" = {
+    "gpt-35-turbo" = {
       name = "gpt-35-turbo"
       rai_policy_name = "Microsoft.Default"
       model_name = "gpt-35-turbo"
       model_format = "OpenAI"
-      model_version = "0301"
+      model_version = "0613"
       scale_type = "Standard"
     },
-    "embedding_model" = {
+    "gpt-35-turbo-1106" = {
+      name = "gpt-35-turbo-1106"
+      rai_policy_name = "Microsoft.Default"
+      model_name = "gpt-35-turbo"
+      model_format = "OpenAI"
+      model_version = "1106"
+      scale_type = "Standard"
+    },
+    "gpt-4" = {
+      name = "gpt-4"
+      rai_policy_name = "Microsoft.Default"
+      model_name = "gpt-4"
+      model_format = "OpenAI"
+      model_version = "0613"
+      scale_type = "Standard"
+    },
+    "gpt-4-1106-preview" = {
+      name = "gpt-4-1106-preview"
+      rai_policy_name = "Microsoft.Default"
+      model_name = "gpt-4"
+      model_format = "OpenAI"
+      model_version = "1106-Preview"
+      scale_type = "Standard"
+    },
+    "gpt-4-vision-preview" = {
+      name = "gpt-4-vision-preview"
+      rai_policy_name = "Microsoft.Default"
+      model_name = "gpt-4"
+      model_format = "OpenAI"
+      model_version = "vision-preview"
+      scale_type = "Standard"
+    },
+    "text-embedding-ada-002" = {
       name = "text-embedding-ada-002"
       rai_policy_name = "Microsoft.Default"
-      model_format = "OpenAI"
       model_name = "text-embedding-ada-002"
+      model_format = "OpenAI"
       model_version = "2"
       scale_type = "Standard"
-    }
+    },
   }
 }
 
