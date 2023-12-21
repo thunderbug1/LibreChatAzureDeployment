@@ -46,11 +46,17 @@ resource "azurerm_linux_web_app" "librechat" {
     APP_TITLE = var.app_title
 
     AZURE_API_KEY                                = module.openai.openai_primary_key
+    AZURE_OPENAI_MODELS                          = "gpt-4-1106-preview,gpt-4,gpt-3.5-turbo,gpt-3.5-turbo-1106,gpt-4-vision-preview"
+    AZURE_OPENAI_DEFAULT_MODEL                   = "gpt-3.5-turbo"
+    # PLUGINS_USE_AZURE                            = true
+
+    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME           = true
+
     AZURE_OPENAI_API_INSTANCE_NAME               = split("//", split(".", module.openai.openai_endpoint)[0])[1]
-    AZURE_OPENAI_API_DEPLOYMENT_NAME             = var.azure_openai_api_deployment_name != "" ? var.azure_openai_api_deployment_name : (contains(keys(var.deployments), "chat_model") ? var.deployments.chat_model.name : "")
+    # AZURE_OPENAI_API_DEPLOYMENT_NAME             =
     AZURE_OPENAI_API_VERSION                     = var.azure_openai_api_version
-    AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME = var.azure_openai_api_completions_deployment_name != "" ? var.azure_openai_api_completions_deployment_name : (contains(keys(var.deployments), "chat_model") ? var.deployments.chat_model.name : "")
-    AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  = var.azure_openai_api_embeddings_deployment_name != "" ? var.azure_openai_api_embeddings_deployment_name : (contains(keys(var.deployments), "embedding_model") ? var.deployments.embedding_model.name : "")
+    # AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME =
+    # AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  =
 
     CHATGPT_TOKEN  = var.chatgpt_token
     CHATGPT_MODELS = "text-davinci-002-render-sha,gpt-4"
