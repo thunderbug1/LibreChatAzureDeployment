@@ -18,12 +18,12 @@ output "meilisearch_url" {
 }
 
 output "azure_openai_api_key" {
-  value = "${module.openai.openai_primary_key}"
+  value     = module.openai.openai_primary_key
   sensitive = true
 }
 
 output "azure_openai_endpoint" {
-  value = "${module.openai.openai_endpoint}"
+  value     = module.openai.openai_endpoint
   sensitive = true
 }
 

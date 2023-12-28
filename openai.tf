@@ -1,9 +1,9 @@
 module "openai" {
   # application_name = "openai_service_librechat"
-  source              = "Azure/openai/azurerm"
-  version             = "0.1.1"
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  source                        = "Azure/openai/azurerm"
+  version                       = "0.1.1"
+  resource_group_name           = azurerm_resource_group.this.name
+  location                      = azurerm_resource_group.this.location
   public_network_access_enabled = true
   # private_endpoint = {
   #   "pe_endpoint" = {
