@@ -144,7 +144,7 @@ variable "azure_openai_api_completions_deployment_name" {
 
 variable "azure_openai_api_version" {
   description = "The version of your Azure OpenAI API"
-  default     = "2023-05-15"
+  default     = "2024-02-01"
 }
 
 variable "azure_openai_api_embeddings_deployment_name" {
