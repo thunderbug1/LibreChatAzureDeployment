@@ -1,0 +1,59 @@
+location = "region_name" # for e.g. australiaeast
+app_title = "librechat"
+openai_key = ""
+chatgpt_token = "user_provided"
+anthropic_api_key = "user_provided"
+bingai_token = "user_provided"
+palm_key = "user_provided"
+app_service_sku_name = "B1"
+mongo_uri = ""
+use_cosmosdb_free_tier = true
+
+deployments = {
+  "gpt-35-turbo" = {
+    name = "gpt-35-turbo"
+    rai_policy_name = "Microsoft.Default"
+    model_name = "gpt-35-turbo"
+    model_format = "OpenAI"
+    model_version = "0613"
+    scale_type = "Standard"
+  }
+  "gpt-35-turbo-16k" = {
+    name = "gpt-35-turbo-16k"
+    rai_policy_name = "Microsoft.Default"
+    model_name = "gpt-35-turbo-16k"
+    model_format = "OpenAI"
+    model_version = "0613"
+    scale_type = "Standard"
+  }
+  "gpt-4" = {
+    name = "gpt-4"
+    rai_policy_name = "Microsoft.Default"
+    model_name = "gpt-4"
+    model_format = "OpenAI"
+    model_version = "0613"
+    scale_type = "Standard"
+  }
+  "gpt-4-32k" = {
+    name = "gpt-4-32k"
+    rai_policy_name = "Microsoft.Default"
+    model_name = "gpt-4-32k"
+    model_format = "OpenAI"
+    model_version = "0613"
+    scale_type = "Standard"
+  }
+  "text-embedding-ada-002" = {
+    name = "text-embedding-ada-002"
+    rai_policy_name = "Microsoft.Default"
+    model_name = "text-embedding-ada-002"
+    model_format = "OpenAI"
+    model_version = "2"
+    scale_type = "Standard"
+  }
+}
+
+azure_openai_api_deployment_name = ""
+azure_openai_api_completions_deployment_name = ""
+azure_openai_api_version = "2024-02-01"
+azure_openai_api_embeddings_deployment_name = ""
+public_network_access_enabled = false
